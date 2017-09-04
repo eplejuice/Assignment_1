@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<!-- This file contains data that constitute the fixtures for Assignment 1 in IMT2571
+  - @author Rune Hjelsvold
+  - @version 2017-08-24
+  -->
+<dataset>
+    <table name="book">
+        <column>id</column>
+        <column>title</column>
+        <column>author</column>
+        <column>description</column>
+        <row>
+            <value>1</value>
+            <value>Jungle Book</value>
+            <value>R. Kipling</value>
+            <value>A classic book.</value>
+        </row>
+        <row>
+            <value>2</value>
+            <value>Moonwalker</value>
+            <value>J. Walker</value>
+            <null />
+        </row>
+        <row>
+            <value>3</value>
+            <value>PHP &amp; MySQL for Dummies</value>
+            <value>J. Valade</value>
+            <value>Written by some smart gal.</value>
+        </row>
+    </table>
+</dataset>

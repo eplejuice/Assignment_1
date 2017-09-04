@@ -1,0 +1,5 @@
+# assignment 1
+tests/vendor
+tests/composer.json
+tests/composer.lock
+tests/TestDBProps.php
