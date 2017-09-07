@@ -95,7 +95,7 @@ class DBModel implements IModel
             throw $ex;
         }
         if($book->title == '' || $book->author == '') {
-            throw new Exception("Blank title or author");
+            throw new Exception("Blank title or author when adding");
         }
         $stmt->bindValue(':title', $book->title);
         $stmt->bindValue(':author', $book->author);
@@ -111,7 +111,7 @@ class DBModel implements IModel
     public function modifyBook($book)
     {
         if($book->title == '' || $book->author == '') {
-            throw new Exception("Blank title or author");
+           throw new Exception("Blank title or author when modifying");
         }
         
         $stmt = $this->db->prepare('UPDATE  book SET title = :title, author = :author, description = :description  WHERE id =' . $book->id);
@@ -131,7 +131,10 @@ class DBModel implements IModel
      * @param $id integer The id of the book that should be removed from the collection.
      */
     public function deleteBook($id)
-    {
+    {  
+        if(!is_numeric($id)) {
+        throw new Exception('Cannot delete Non-numeric value.');
+        }
         $affectedNo = $this->db->exec( 'DELETE FROM book WHERE id=' . $id );            
     }
 }

@@ -124,6 +124,30 @@ class FunctionalTests extends \PHPUnit\Framework\TestCase
 					    'description' => '<script document.body.style.visibility="hidden" />',
 						self::OUTCOME_IDX => self::OUTCOME_SUCCESS
 					);
+		// case where title is blank.
+		$cases[3] = array
+		            (
+					    'title' => '',
+					    'author' => 'Test author',
+					    'description' => 'Test author',
+						self::OUTCOME_IDX => self::OUTCOME_FAILURE
+					);
+		// case where author is blank.	
+		$cases[4] = array
+					(	
+						'title' => 'Test title',
+						'author' => '',
+						'description' => 'Test author',
+						self::OUTCOME_IDX => self::OUTCOME_FAILURE
+					);
+		// case where title and author is blank.
+		$cases[5] = array
+					(	
+						'title' => '',
+						'author' => '',
+						'description' => 'Test author',
+						self::OUTCOME_IDX => self::OUTCOME_FAILURE
+					);		
 		return $cases;
 	}
 	
@@ -380,8 +404,7 @@ class FunctionalTests extends \PHPUnit\Framework\TestCase
 	 */
     public function testAdd()
     {
-		$bookListLength = $this->getBookListLength();
-				
+		$bookListLength = $this->getBookListLength();		
 		foreach ($this->generateTestCases() as $testCase)
 		{
 			if ($testCase[self::OUTCOME_IDX] === self::OUTCOME_SUCCESS)
@@ -397,7 +420,10 @@ class FunctionalTests extends \PHPUnit\Framework\TestCase
 			else
 			{
 				// Verifying that error page is returned
-				
+				$testBookId = -1;
+				$this->addBook($testBookId, $testCase['title'], $testCase['author'], $testCase['description'], self::OUTCOME_FAILURE);
+				$page = $this->session->getPage();	
+				$this->assertTrue($this->isExpectedPage($page, self::ERROR_PAGE_TITLE_IDX), 'testAdd: expecting error page');
 			}
 		}
 	}
@@ -450,7 +476,9 @@ class FunctionalTests extends \PHPUnit\Framework\TestCase
 			else
 			{
 				// Verifying that error page is returned
-				
+				$this->modifyBook($testBookId, $testCase['title'], $testCase['author'], $testCase['description']);
+				$page = $this->session->getPage();	
+				$this->assertTrue($this->isExpectedPage($page, self::ERROR_PAGE_TITLE_IDX), 'testModify: expecting error page');
 			}
 		}
     }

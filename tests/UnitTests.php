@@ -80,12 +80,33 @@ class UnitTests extends TestCase
 							  self::OUTCOME_IDX => self::OUTCOME_SUCCESS
                        ),						
 				       array ('id' => null, 
-					          'title' => '<script document.body.style.visibility="hidden" />',
-						      'author' => '<script document.body.style.visibility="hidden" />',
-                              'description' => '<script document.body.style.visibility="hidden" />',
-							  self::OUTCOME_IDX => self::OUTCOME_SUCCESS
-                       )
-                    );					   
+								'title' => '<script document.body.style.visibility="hidden" />',
+								'author' => '<script document.body.style.visibility="hidden" />',
+                    			'description' => '<script document.body.style.visibility="hidden" />',
+								self::OUTCOME_IDX => self::OUTCOME_SUCCESS
+					   ),
+					   array ('id' => null, 
+								'title' => '',
+								'author' => 'testAuthor',
+								'description' => null, 
+								self::OUTCOME_IDX => self::OUTCOME_FAILURE
+								   
+					   ),
+					   array ('id' => null, 
+								'title' => 'testTitle',
+	   			   				'author' => '',
+								'description' => null,
+								self::OUTCOME_IDX => self::OUTCOME_FAILURE
+								   
+					   ),
+					   array ('id' => null, 
+								'title' => '',
+								'author' => '',
+								'description' => null,
+								self::OUTCOME_IDX => self::OUTCOME_FAILURE
+								
+					   ),		
+    				);					   
 
     /**
 	 * Returning the PDO object for the database to be used for tests.
@@ -176,6 +197,23 @@ class UnitTests extends TestCase
 			else
 			{
 				//TODO: Add tests for unsuccessful cases
+				$book = $this->generateTestBook($i);		
+				
+				$exception = null;
+				try {
+					$model->addBook($book);					
+				}
+				catch(Exception $ex){
+					$exception = $ex;
+				}
+				
+				$this->assertNotNull($exception, 'exception did not get thrown');
+
+				$dbSizePost = $this->getConnection()->getRowCount('book');
+
+				$this->assertEquals($dbSizePost, $dbSize, 'the size is not equal when it should be');
+				
+							
 			}
 		}
 	}
@@ -217,6 +255,23 @@ class UnitTests extends TestCase
 			else
 			{
 				//TODO: Add tests for unsuccessful cases
+				self::$TEST_CASES[$i]['id'] = self::$TEST_CASES[0]['id'];				
+				$book = $this->generateTestBook($i);		
+				
+				$exception = null;
+				try {
+					$model->modifyBook($book);					
+				}
+				catch(Exception $ex){
+					$exception = $ex;
+				}
+				
+				$this->assertNotNull($exception, 'exception did not get thrown');
+				
+			//	$this->assertBookData($i, $model->getBookById(self::$TEST_CASES[$i]['id']));
+			// Not 100% sure about this one yet
+				
+
 			}
 		}
 	}
