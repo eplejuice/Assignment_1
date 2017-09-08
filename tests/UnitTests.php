@@ -276,6 +276,9 @@ class UnitTests extends TestCase
 				
 				// if an exception got thrown the variable should have some data.
 				$this->assertNotNull($exception, 'exception did not get thrown');
+
+				self::$TEST_CASES[$i]['id'] = $realId;
+				
 			}
 		}
 	}
