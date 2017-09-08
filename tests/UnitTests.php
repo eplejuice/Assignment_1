@@ -207,10 +207,12 @@ class UnitTests extends TestCase
 					$exception = $ex;
 				}
 				
+				// if an exception got thrown the variable should contain some data, and not null.
 				$this->assertNotNull($exception, 'exception did not get thrown');
 
+				// fetching the lenght of the database after trying to add a illegal book.
 				$dbSizePost = $this->getConnection()->getRowCount('book');
-
+				// checking to see if the size of the databse before is equal to after, if the size is not equal a illegal book has been added. 
 				$this->assertEquals($dbSizePost, $dbSize, 'the size is not equal when it should be');
 				
 							
@@ -255,9 +257,15 @@ class UnitTests extends TestCase
 			else
 			{
 				//TODO: Add tests for unsuccessful cases
+				
+				$realId = self::$TEST_CASES[$i]['id'];
+				
+
 				self::$TEST_CASES[$i]['id'] = self::$TEST_CASES[0]['id'];				
 				$book = $this->generateTestBook($i);		
 				
+				$bookTemp = $model->getBookById(self::$TEST_CASES[$i]['id']);
+
 				$exception = null;
 				try {
 					$model->modifyBook($book);					
@@ -266,12 +274,8 @@ class UnitTests extends TestCase
 					$exception = $ex;
 				}
 				
+				// if an exception got thrown the variable should have some data.
 				$this->assertNotNull($exception, 'exception did not get thrown');
-				
-			//	$this->assertBookData($i, $model->getBookById(self::$TEST_CASES[$i]['id']));
-			// Not 100% sure about this one yet
-				
-
 			}
 		}
 	}

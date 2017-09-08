@@ -23,6 +23,7 @@ class Controller {
 	
 	public function __construct()  
     {  
+		// tries to establish a connection to the database, if not successful, creates a new error page displayed to the user.
 		try {
 		session_start();
         $this->model = new DBModel();

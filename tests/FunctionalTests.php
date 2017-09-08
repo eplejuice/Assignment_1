@@ -419,7 +419,7 @@ class FunctionalTests extends \PHPUnit\Framework\TestCase
 			}
 			else
 			{
-				// Verifying that error page is returned
+				// Verifying that error page is returned, by adding a book with illegal data.
 				$testBookId = -1;
 				$this->addBook($testBookId, $testCase['title'], $testCase['author'], $testCase['description'], self::OUTCOME_FAILURE);
 				$page = $this->session->getPage();	
@@ -475,7 +475,7 @@ class FunctionalTests extends \PHPUnit\Framework\TestCase
 			}
 			else
 			{
-				// Verifying that error page is returned
+				// Verifying that error page is returned, by trying to modify a book with illegal data.
 				$this->modifyBook($testBookId, $testCase['title'], $testCase['author'], $testCase['description']);
 				$page = $this->session->getPage();	
 				$this->assertTrue($this->isExpectedPage($page, self::ERROR_PAGE_TITLE_IDX), 'testModify: expecting error page');
